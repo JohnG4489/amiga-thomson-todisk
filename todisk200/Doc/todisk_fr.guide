@@ -1,0 +1,1342 @@
+@database ToDisk
+@master ToDisk.guide
+@$VER: ToDisk.guide v2.7
+@remark Created by Sébastien Gréau
+
+@node "Main" "Documentation française de ToDisk"
+
+    .-----.
+    !     !     @{b}ToDisk 2.7@{ub}
+    `-. .-'     @{i}Copyright 2018@{ui}
+      | |.-.    Ce logiciel est @{"GiftWare" link "Doc_Giftware" 0}
+      | ||  \\
+      | ||  /   Documentation française
+      `-'`-'
+
+
+    @{u}Table des matières@{uu}
+
+
+    @{b}@{u}Général@{uu}@{ub}
+
+    @{"Description                            " link "Doc_Description"   0} ........ C'est quoi?
+    @{"Historique                             " link "Doc_History"       0} ........ Quoi de neuf?
+    @{"Améliorations possibles                " link "Doc_Future"        0} ........ Quoi de prévu?
+
+    @{"DOS Drivers PC0/PC1                    " link "Doc_DOSDrivers_PC" 0} ........ PC Quoi??!
+    @{"DOS Drivers TA0/TB0                    " link "Doc_DOSDrivers_TO" 0} ........ TA Quoi??!
+    @{"Documentation technique du FS          " link "Doc_FS"            0} ........ Encore un FS???
+
+
+    @{b}@{u}Utilisation@{uu}@{ub}
+
+    @{"Requis / Installation                  " link "Doc_Install"       0} ........ Où on met ça?
+    @{"Usage via le CLI                       " link "Doc_Usage"         0} ........ Ca marche comment?
+    @{"Utilisation rapide de todisk           " link "Doc_UsageQuick"    0} ........ Viiiiiite!
+
+
+    @{b}@{u}Informations@{uu}@{ub}
+
+    @{"Où trouver des logiciels thomson       " link "Doc_Link"          0} ........ Je veux des softs!
+    @{"Foire aux questions                    " link "Doc_FAQ"           0} ........ Rien compris!?
+    @{"A propos de...                         " link "Doc_About"         0} ........ C'est qui qu'a fait ça?
+@endnode
+
+
+@node "Doc_Giftware" "Giftware"
+ToDisk est le fruit de nombreuses heures de travail réparties  selon  mon  temps
+libre.
+Si cette commande vous plait et que vous avez envie de  la  voir  évoluer,  vous
+pouvez dès à présent @{"m'envoyer un petit cadeau" link "Doc_About" 0}. Ceci  ne  fera  qu'alimenter  ma
+motivation à développer.
+
+@{b}ToDisk est donc GiftWare.@{ub}
+
+
+@{u}Ca veut dire quoi GiftWare?@{uu}
+
+Ca veut dire que vous pouvez m'envoyer un cadeau  si  vous  estimez  trouver  un
+interêt particulier à ToDisk.
+
+
+@{u}Des idées de cadeaux?@{uu}
+
+- un To8, un To8D, un To9+, ou bien un lecteur de disquette Thomson,  un  crayon
+  optique... bref du matos thomson qui traine chez vous.
+- un amiga 1200, ou du matos amiga qui fonctionne et qui ne vous sert plus.
+- un pegasos ou un AOne, voire un X1000.
+- un PC ou une carte mère PC avec les pièces que vous pouvez céder.
+- une Ferrari.
+- une carte postale de votre région.
+- un colis pays avec, par exemple, des spécialités culinaires de chez vous.
+- un voyage aux Caraïbes ou à la Réunion.
+- une place (ou deux) pour un spectacle sur Paris.
+- une nuit avec votre copine.
+- un keyfile de votre soft, si vous êtes développeur d'un soft.
+- un DVD Vidéo que j'ai pas voire un pack de DVD vierges R ou RW.
+- etc etc etc...
+@endnode
+
+
+@node "Doc_Description" "Description"
+@{b}@{u}Description@{uu}@{ub}
+
+ToDisk est une petite commande puissante qui vous  permettra  de  manipuler  des
+fichiers provenant d'un support avec un  file  system  Thomson.  Elle  gère  les
+fichiers images comme les disques réels.
+Ainsi, en une ligne de commande, vous pourrez extraire, convertir  ou  dupliquer
+des données d'un disque Thomson.
+
+ToDisk supporte les 3 formats  de  fichiers  image  connus  dans  la  communauté
+thomsoniste:
+- le format TDS: tout premier format. N'est plus vraiment utilisé à ce jour
+- le format SAP: il fût le remplaçant du TDS
+- le format FD: il s'agit d'un format brut pouvant contenir les  2  faces  d'une
+  disquette thomson, voire même 2 unités disque avec 2 faces chacune. Ce  format
+  devient petit à petit le format de référence du Thomson.
+
+Mais @{b}ToDisk sait aussi lire et écrire des disquettes thomson directement  depuis
+le lecteur de disquette de l'Amiga@{ub}.
+Pour cela, il suffit d'aller lire la rubrique @{"Usage" link "Doc_Usage" 0}.
+
+ToDisk supporte également les fichiers K7.
+
+Depuis la version 2.7, la commande est livrée avec le handler "tofilesystem" qui
+permet à l'Amiga OS d'exploiter directement  le  système  de  fichier  de  votre
+disquette thomson.
+
+@endnode
+
+
+@node "Doc_History" "Histoire"
+@{b}@{u}Historique@{uu}@{ub}
+
+2.70 (16/08/2018):
+    * Ajout  : - Ajout du handler tofilesystem dans l'archive todisk.
+               - ToDisk   prend   maintenant   en   compte   les    informations
+               supplémentaires  des  fichiers  .CHG  dans  le   descripteur   de
+               fichiers.
+
+    * Modif  : - Correction d'un bug d'écriture de todisk.device.
+               Ce bug rendait les disquettes écrites par ce device  difficile  à
+               lire sur  un  vrai  Thomson.  + Amélioration   du   device   pour
+               fonctionner avec le handler  "tofilesystem".  Ce  nouveau  device
+               corrige également d'autres petits bugs, et passe en version 2.20.
+               - Amélioraton  de  l'import  Assdesass.  Le  convertisseur  passe
+               maintenant les labels  et  les  instructions  en  majuscule  pour
+               satisfaire Assdesass.
+               - Synchronisation des routines  de  gestion  du  filesystem  avec
+               celles du nouveau handler.
+               - ToDisk est maintenant conçu pour fonctionner sur une rom 2.x.
+               Pour cela, il faudra bien penser à mettre à jour le todisk.device
+               Testé avec un Workbench 2.1.
+               - Gestion des caractères accentués des noms  et  commentaires  de
+               fichiers.
+
+2.60 (21/01/2013):
+    * Ajout  : - ToDisk sait maintenant lire les fichiers K7 (TO/MO) comme  s'il
+               s'agissait d'une disquette! On peut lire le contenu avec l'option
+               DIR. Extraire le contenu avec  l'option  LOAD,  etc.  Seules  les
+               options d'écritures sont interdites.
+               Il est également possible de convertir un  fichier  K7  en  image
+               disque. Exemple: ToDisk K7 scarfinger.k7 TOSAP scarfinger.sap
+               * Note *: ToDisk  ne  sait  lire  que  les  fichiers  au   format
+               standard.
+               - Ajout  de  la  méthode  de  conversion  "ASCG2"  dans  l'option
+               IMPORTTXT. Elle permet de convertir,  à  la  sauvegarde  sur  une
+               disquette thomson (ou une image disque), un simple fichier  texte
+               ANSI dans le jeu de caractères ASCII du thomson.
+               - Possibilité  de  paramètrer  la  numérotation  automatique  des
+               lignes dans le convertisseur Txt->Ass. Syntaxe:
+               IMPORTTXT=ASS,10,1 (Commence en ligne 10 avec un pas de 1)
+               Si pas de paramètres spécifiés, todisk numérote  maintenant  avec
+               un pas de 10, en commençant à 100 (=numérotation par  défaut  sur
+               Assdesass).
+
+    * Modif  : - Fix   LOAD.   Dans   certains   cas,   cette   option   pouvait
+               dysfonctionner.
+               - Fix problème de gestion des dates thomson.
+               - L'option  de  conversion  Texte->Assdesass  (IMPORTTXT=ASS)  ne
+               prend plus en compte le type de fichier source qui était  calculé
+               en fonction du suffix.
+               - Correction d'un bug de conversion de caractères G2 en Ansi.  Le
+               problème était visible dans certains cas avec  l'option  VIEW  ou
+               l'option CONVASC.
+               - Fix d'un bug de comparaison de fichier dans l'option CMPDSKDOS.
+               - Blindage anti fichier corrompu dans la gestion du file system.
+               - * BOULETTE * légère modification des DOS Drivers PC0 et PC1 qui
+               ne fonctionnaient pas à cause du flag positionné en mode Thomson.
+               Ces  nouveaux  DOS  Drivers   permettent   maintenant   de   lire
+               correctement les disquettes DOS PC.
+               - L'option CONVMAP  prend  maintenant  en  compte  le  suffix  du
+               fichier (.MAP) pour  éviter  toute  tentative  de  conversion  de
+               fichier binaire en iff.
+
+2.50 (12/09/2012):
+    * Ajout  : - Ajout de l'option NOFMT pour  désactiver  l'auto  formatage  de
+               piste de l'option backup. A noter que  cette  option  équivaux  à
+               utiliser l'option i0 dans le paramètre TOFLP.
+               - Ajout des options CMPDSKRAW et  CMPDSKDOS  pour  comparer  deux
+               disques.  CMPDSKRAW  fait  une  comparaison  brute,  secteur  par
+               secteur. CMPDSKDOS fait une comparaison fichier par fichier et ne
+               tient donc pas compte des secteurs non utilisés.
+               - Ajout de l'option DUMPSECTOR.
+               - Ajout de l'option FINDDSK et NORFD (paramètre de FINDDSK).
+               - Ajout de l'option VIEW: Permet de visualiser un fichier.
+               L'option déduit le type du fichier et fait l'affichage  adéquate,
+               en dumpant les fichiers binaires, en affichant  les  images  MAP,
+               les fichiers textes, les listing basic, etc. Bref,  cette  option
+               peut se substituer aux options VIEWAND, VIEWMAP et DUMP dans  une
+               majorité des cas.
+               - Ajout de l'option IMPORTTXT. Avec  cette  fonctionnalité,  vous
+               pouvez programmer en assembleur sur un éditeur  de  texte  Amiga,
+               puis importer le  source  texte  dans  le  format  assdesass,  de
+               manière à  pouvoir  l'assembler  dessus  sans  avoir  à  utiliser
+               l'éditeur de source d'assdesass.
+
+    * Modif  : - L'option  backup  (alias  TOSAP,  TOTDS,  etc.)  auto   formate
+               maintenant les pistes. Cette fonctionnalité  est  utile  pour  le
+               désarchivage d'image disque sur disquette 3.5. Il est possible de
+               fixer l'entrelacement des pistes via l'option 'i'. Exemple:
+               ToDisk DSK ram:test.sap TOFLP u0s0i5
+               Dans cet exemple, l'entrelacement de chaque piste est fixé à 5.
+               - Les  options  CONVASS,  CONVBAS   et   CONVASM,   convertissent
+               maintenant le jeu de caractères G2 du thomson en ANSI.
+
+2.00 (30/10/2010):
+    * Modif  : - Le  code  de  ToDisk  a  été  totalement  refondu  et  s'appuie
+               maintenant  sur  le  todisk.device  pour  gérer  les   disquettes
+               physiques thomson.
+
+1.32 (25/08/2006):
+    * Modif  : - Modification du  CopyFile  pour  trouver  un  nom  original  au
+               fichier destination quand celui-ci existe déjà. Dans ce  cas,  il
+               est décliné avec un suffixe numérique.
+
+1.31 (19/01/2000):
+    * Modif  : - J'ai complétement oublié de corriger le mauvais  calcul  de  la
+               taille des fichiers en Ko, dans la version 1.30 :) (Bug connu  de
+               longue date mais complétement oublié)
+
+1.30 (14/01/2000):
+    * Modif  : - La gestion de l'interleave est maintenant la même  que  sur  le
+               Thomson.
+               - Correction d'un problème  lors  de  l'utilisation  d'une  unité
+               disque non connectée.
+               - Correction d'un Bug qui générait  une  mauvaise  copie  lorsque
+               l'on faisait un backup sur une même unité.
+
+1.20 (25/12/1999):
+    * Modif  : - (Joyeux Noël)
+               - Correction d'un 'bug' dû au non respect  du  codage  IBM ®  des
+               secteurs de la part du Thomson. (Le Thomson  numérote  la  face 1
+               comme la face 0)
+
+1.01 (3/10/1998):
+    * Modif  : - ToDisk permet maintenant de recopier les fichiers dont les noms
+               comportent des caractères ASCII inférieurs à 32.
+
+1.00 (13/9/1998):
+    * Ajout  : - Première version
+@endnode
+
+
+@node "Doc_Future" "Améliorations possibles"
+@{b}@{u}Améliorations possibles@{uu}@{ub}
+
+- Option de backup de disquette DOS
+- Ajouter la possibilité de desassembler un executable
+- Option de défragmentation de disque
+- Option de conversion des fichiers Paragraphe
+- Option de conversion des fichiers ASM en ASS ou inversement
+@endnode
+
+
+@node "Doc_DOSDrivers_PC" "Explication sur les DOS drivers"
+@{b}@{u}Explication sur les DOS drivers PC0 et PC1@{uu}@{ub}
+
+La commande ToDisk est conçue pour satisfaire  les  besoins  de  la  communauté
+Thomson. Cette commande aurait pu s'appuyer sur le mfm.device  (driver  utilisé
+pour lire/écrire des disquettes PC) si celui-ci  avait  été  capable  de  gérer
+les formats de piste exploités par les Thomson. Malheureusement,  contrairement
+à  ce  qu'indique  son  nom,  le  mfm.device  n'implémente   pas   toutes   les
+fonctionnalités couvertes par le codage MFM.
+
+Sreg a donc entrepris de développer un device couvrant des fonctionnalités  qui
+manquent, tout en  améliorant  les  stratégies  de  lecture  et  d'écriture  du
+mfm.device.
+
+En installant @{b}todisk.device@{ub} dans votre @{b}DEVS:@{ub} et en  plaçant  les  "DOS Drivers"
+@{b}PC0@{ub}  et  @{b}PC1@{ub}  correspondants  (ceux  fournis  dans   l'archive   todisk)   dans
+@{b}DEVS:DOSDrivers/@{ub}, vous pourrez manipuler des disquettes DOS  PC en  bénéficiant
+de toute la puissance de @{b}todisk.device@{ub}.
+
+
+@{b}@{u}Note:@{uu}@{ub}
+
+Avant la version 2.6, ces "DOS Drivers" ne fonctionnaient  pas  pour  lire  des
+disquette PC car le flag était positionné à 1 (mode thomson) au lieu de 0 (mode
+PC).
+Les "DOS Drivers" de cette archive corrigent cette erreur. Merci @Zalex.
+
+
+
+@{b}@{u}Utilisation de FAT95 à la place de CrossDOSFileSystem@{uu}@{ub}
+
+PC0 et PC1 sont configurés pour utiliser le "CrossDOSFileSystem"  car  celui-ci
+est présent par défaut dans l'Amiga  OS.  Mais  rien  ne  vous  empêche  de  le
+remplacer  par  FAT95  (http://aminet.net/disk/misc/fat95.lha),  ce  qui   vous
+permettra de gérer les noms longs.
+
+Après avoir installé FAT95 dans  votre  "L:",  vous  n'aurez  qu'à  éditer  les
+fichiers PC0 et PC1, puis remplacer la ligne:
+    FileSystem      = L:CrossDOSFileSystem
+...par:
+    FileSystem      = L:FAT95
+@endnode
+
+
+@node "Doc_DOSDrivers_TO" "Explication sur les DOS drivers"
+@{b}@{u}Explication sur les DOS drivers TA0 et TB0@{uu}@{ub}
+
+Todisk  2.7  livre  maintenant  un  handler  permettant  au  système  Amiga  de
+reconnaître directement les  fichiers  thomson  sans  passer  par  la  commande
+todisk. Ceci dit la commande todisk contient bien  @{"plus de fonctionnalités" link "Doc_Usage" 0}  que
+ce que permet le handler.
+Ce handler est conçu pour fonctionner sur une rom 2.x et un Workbench 2.1.
+
+Pour l'utiliser, il suffit d'installer les DOS Drivers TA0 et  TB0  dans  votre
+répertoire Devs/DOSDrivers.
+
+Note: Une face de disque est considérée comme un  disque  à  part  entière  sur
+Thomson. D'où la présence de deux DOS Drivers pour une même disquette.
+
+Une fois ces fichiers installés et montés, vous aurez donc accès aux 2 faces de
+n'importe quelle disquette thomson. Vous  pourrez  également  formater  chacune
+des faces à l'aide de l'outil de formatage du système (testé sous OS3.9).
+
+Ce handler système propose donc une manière simple d'échanger des données entre
+votre Amiga et votre Thomson.
+
+A noter  que,  coté  Amiga,  le  filesystem  a  été  légèrement  amélioré  pour
+enregistrer la date et l'heure des fichiers, ainsi que la date  de  création du
+disque. Ces informations en plus ne sont pas perceptibles  côté  Thomson.  Plus
+d'informations @{"ici" link "Doc_FS" 0}.
+
+
+@{u}Détail de la mount list TA0@{uu}
+
+FileSystem      = L:ToFileSystem    /* nom du handler */
+Device          = todisk.device     /* nom du device */
+Flags           = 0x1b0             /* voir plus bas */
+Surfaces        = 1                 /* nombre de surfaces à utiliser */
+/*SectorsPerTrack = 8*/             /* Value of 8 because Workbench Format don't support 256 Bytes per sector */
+/*SectorSize      = 512*/           /* Workbench Format don't support 256. Then 512*8 is equal to 256*16! */
+BlocksPerTrack  = 2
+BlockSize       = 2048
+Reserved        = 0                 /* non utilisé */
+LowCyl          = 0                 /* index de la première piste (non utilisé) */
+HighCyl         = 79                /* index de la dernière piste */
+Buffers         = 5                 /* non utilisé (pour le moment) */
+BufMemType      = 0                 /* non utilisé (pour le moment) */
+StackSize       = 100000            /* taille de la pile pour le handler */
+Priority        = 10                /* utilisé par le système */
+GlobVec         = -1                /* utilisé par le système */
+DosType         = 0x54465300        /* TA0 */
+Mount           = 1                 /* procède à l'ouverture immédiate du volume */
+
+@{b}Important:@{ub} Il est impossible de passer en format de piste thomson sans utiliser
+les  flags de la mount list.
+Ces flags permettent de spécifier la surface  unique  à  utiliser  par  le  dos
+driver, ainsi que de fixer un bug inhérent au thomson sur le format MFM.
+
+@{b}Dans le cas du wb 2.x ou plus@{ub}, les entrées  BlocksPerTrack  et  BlockSize  sont
+obligatoirement spécifiées et utilisées pour définir le nombre et la taille des
+blocs par piste.
+Par commodité, et parce que les entrées spécifiques au 3.0 sont de toute  façon
+courcicuitées, les mount list sont livrées compatibles avec le wb 2.x.
+
+@{b}Dans  le  cas  du  wb 3.0  ou  plus@{ub},  les  flags  courcicuitent   les   entrées
+"SectorsPerTrack" et "SectorSize" de la mount list.
+Néanmoins, les entrées courcicuitées doivent quand même  être  spécifiées  pour
+les besoins de l'amiga os.
+Le format thomson est normalement de 16 secteurs de 256 octets par piste,  mais
+l'amiga os (testé sur 3.9) refuse de monter un  volume  avec  des  secteurs  de
+taille inférieure à 512 octets. Donc, afin que l'os  retrouve  ses  petits,  on
+fixe un nombre de secteurs par piste moitié moindre (=8)  pour  une  taille  de
+secteur double (=512). Ainsi, la taille d'une piste et celle de  ses  2  blocs,
+restent cohérentes par rapport aux valeurs normales.
+
+L@{b}'entrée "Flags":@{ub} donne des directives au device et/ou au handler.
+Syntaxe des bits du poids fort au poids faible: oofllsssss
+
+* oo: 2 bits pour spécifier la surface à prendre en compte pour le driver
+  - 00: prend en compte les 2 faces (mode non Thomson)
+  - 01: équivalent de l'unité 0 d'un disque sur Thomson
+  - 10: équivalent de l'unité 1 du même disque sur Thomson
+
+* f: 1 bit flag thomson
+  - 0: les pistes sont encodées avec leur numéro de face légal
+  - 1: les pistes des 2 faces portent le même numéro 0 (bug inhérent au Thomson)
+  Note: ce bit n'est utilisé que par le device
+
+* ll: 2 bits de longueur de secteur
+  - 00: longueur par défaut de 512 octets par secteur
+  - 01: longueur de 256 octets par secteur
+  - 10: longueur de 512 octets par secteur
+  - 11: longueur de 1024 octets par secteur
+
+* sssss: 5 bits pour spécifier le nombre de secteurs par piste:
+  - 00000: nombre de secteurs par défaut fixé à 9 comme sur PC
+  - 10000: 16 secteurs par piste (possible qu'avec 256 octets par secteur)
+  Note: on peut fixer une valeur de 1 à 31 secteurs  par  piste  sachant  qu'il
+  faut utiliser des valeurs cohérentes  avec  la  taille  des  secteurs  et  la
+  taille maximum théorique des pistes.
+
+En conclusion: si tous les bits sont à 0, l'encodage des pistes est  par défaut
+celui du PC.
+
+
+@{u}D'autres paramètres possibles?@{uu}
+
+Le  format  thomson  fonctionne  avec  une  géométrie  disque  de  80   pistes,
+16 secteurs  de  256  octets  par  piste.  Chaque  face  représente  un  disque
+indépendant de l'autre face. Le flag 'f' doit être positionné à 1.
+Les pistes sont découpées  en  blocs  de  2 Ko  par  le  file  system,  ce  qui
+représente 8 secteurs par bloc. En tout, il y a donc 160 blocs libres pour  les
+fichiers.
+
+Il est théoriquement possible de changer la taille des blocs en configurant des
+pistes de 8 secteurs de 512 octets mais cela  ne  change  pas  la  capacité  du
+disque et n'apporte donc rien d'intéressant. Le nombre de  secteurs  par  piste
+doit être divisible par 2. Il est également possible d'augmenter le  nombre  de
+pistes.
+
+Quoi qu'il en soit, un format hybride ne sera pas lisible sur TO.
+@endnode
+
+
+@node "Doc_FS" "Fonctionnement et limitations du système de fichier Thomson"
+@{b}@{u}Fonctionnement et limitations du système de fichier Thomson@{uu}@{ub}
+
+Le système de fichier thomson considère chacune des faces d'une disquette comme
+étant un disque à part entière.
+
+Chaque disque a une capacité de 320 Ko, dont 4 Ko utilisés pour le directory et
+le système de gestion des blocs.  Il  reste  donc  316 Ko  de  libre  pour  les
+fichiers au total.
+
+
+@{u}Spécifications originales@{uu}
+
+- 8 caractères maximum pour les noms, et 3 maximum pour le suffixe du nom.
+- 112 fichiers maximum dans le répertoire. Du coup, si le répertoire est  plein
+  mais qu'il reste quand même des blocs  libres  sur  le  disque  et  que  l'on
+  souhaite enregistrer un nouveau fichier, un "disk full" est généré  à  défaut
+  de ne pas avoir de message "directory full" prévu par l'Amiga OS.
+- pas de notion  de  sous  répertoire.  Si  tentative  de  création  d'un  sous
+  répertoire, une erreur "action not known" est déclanchée.
+- le nom d'un fichier est associé à un "type" de 2 octets non ascii qui ne peut
+  être esthétiquement attaché à un nom de fichier sur amiga. De ce fait, il est
+  donc intégré au commentaire du fichier amiga.
+- 8 caractères maximum pour le nom du volume
+- les caractères accentués nécessitant 3 caractères  invisibles,  un  nom  avec
+  deux  accents,  par  exemple,  ne  peut  pas  faire  plus  de  4   caractères
+  (car 3+3+2=8).
+- pas de date de fichier
+- pas de date de volume
+
+
+@{u}Spécifications améliorées par le file system@{uu}
+
+- ajout de la date de création du fichier
+- ajout de la date de création du volume
+- l'amiga os ne supporte pas les noms de volume vides. Dans ce cas, un  nom  de
+  volume par défaut est généré pour les besoins du système.
+@endnode
+
+
+@node "Doc_Install" "Requis / Installation"
+@{b}@{u}Requis@{uu}@{ub}
+
+ToDisk, ainsi que ses composants "todisk.device" et "ToFileSystem"  nécessitent
+la présence d'un 68020 ou plus.
+
+De même, depuis la version 2.7,  ces  outils  nécessitent  une  rom 2.0  et  un
+Workbench 2.x minimum pour fonctionner.
+
+
+@{b}@{u}Installation@{uu}@{ub}
+
+@{u}Contenu de l'archive:@{uu}
+
+C:lha v todisk.lha
+Listing of archive 'todisk.lha':
+Name
+-------------
+todisk2.info
+todisk2/C/todisk
+todisk2/Devs/DOSDrivers/PC0
+todisk2/Devs/DOSDrivers/PC0.info
+todisk2/Devs/DOSDrivers/PC1
+todisk2/Devs/DOSDrivers/PC1.info
+todisk2/Devs/DOSDrivers/TA0
+todisk2/Devs/DOSDrivers/TA0.info
+todisk2/Devs/DOSDrivers/TB0
+todisk2/Devs/DOSDrivers/TB0.info
+todisk2/Devs/todisk.device
+todisk2/L/tofilesystem
+todisk2/Doc.info
+todisk2/Doc/todisk_fr.guide
+todisk2/Doc/todisk_fr.guide.info
+todisk2/todisk.readme
+todisk2/todisk.readme.info
+--------
+17 files
+
+
+@{u}Installaton:@{uu}
+
+Placer todisk.device dans votre DEVS:
+Puis ToDisk dans votre C:
+Pour finir, utiliser ToDisk depuis n'importe quel shell.
+
+@{b}Extra@{ub}: Placer aussi @{"PC0 et PC1" link "Doc_DOSDrivers" 0} dans DEVS:DOSDrivers/  pour  pouvoir  lire  les
+disquettes DOS PC en bénéficiant  de  toute  la  puissance  du  nouveau  device
+todisk.
+
+@{b}Extra 2@{ub}: Copier tofilesystem dans votre L:
+Placer aussi @{"TA0 et TB0" link "Doc_DOSDrivers" 0} dans DEVS:DOSDrivers/ pour pouvoir lire  les  2  faces
+des disquettes thomson ou pour pouvoir générer une nouvelle  disquette  thomson
+depuis votre amiga, directement lisible sur votre thomson.
+Note: TA0 gère la première face de la disquette insérée dans l'unité 0,  tandis
+que TB0 gère la seconde face de cette même disquette.
+
+
+@{u}Information sur todisk.device@{uu}
+
+todisk.device est un driver qui  apporte  les  fonctionnalités  de  lecture  et
+d'écriture des secteurs des disquettes thomson.
+Comme le codage des secteurs est sensiblement le  même  que  pour  celui  d'une
+disquette PC, todisk.device  peut  se  substituer  au  mfm.device  fournit  par
+l'Amiga OS.
+Les stratégies de lecture et d'écriture  des  secteurs  de  todisk.device  sont
+intelligentes. Ainsi, une disquette  ayant  des  difficultés  à  être  lue  par
+le mfm.device, peut s'avérer parfaitement lisible par todisk.device.
+
+
+@{u}Information sur tofilesystem et sur les DOS Drivers TA0 et TB0@{uu}
+
+"tofilesystem" est un nouveau handler qui permet au système  Amiga  de  pouvoir
+manipuler les fichiers d'une disquette formatée pour un thomson.  Les  fichiers
+des faces A et B  sont  donc  directement  accessibles  depuis  n'importe  quel
+outil de gestion de fichier.
+A noter cependant que le format de fichier  thomson  est  contraignant.  Il  ne
+supporte par la notion de sous-répertoire, et les noms de fichiers sont limités
+à 8 caractères + 3 caractères pour le suffixe.
+Vous pouvez formater  une  nouvelle  disquette  via  l'outil  de  formatage  du
+système. Formater les 2 faces nécessite 2 opérations de formatage car  celle-ci
+sont considérées comme 2 disques indépendants sur thomson.
+L'espace vide disponible par face représente 316Ko.
+
+
+@endnode
+
+
+@node "Doc_Usage" "Usage via le CLI"
+ToDisk est une commande. Elle ne peut donc se lancer que dans un CLI.
+
+@{b}@{u}Usage de la ligne de commande@{uu}@{ub}
+
+ToDisk FILES/M,DSK=K7,DIR/S,LOAD=COPY,SAVE,DELETE,SORTDIR/S,CMPDSKRAW,
+       CMPDSKDOS,FINDDSK,NORFD/S,FORMATFLP,FORMATTDS,FORMATSAP,FORMATFD,TOFLP,
+       TOTDS,TOSAP,TOFD,NOFMT/S,DUMPSECTOR,VIEW,VIEWMAP,VIEWAND,DUMP=VIEWBIN,
+       UNPROT/S,CONVASC/S,CONVBAS/S,CONVASS/S,CONVASM/S,CONVMAP/S,CONVALL/S,
+       IMPORTTXT,MAPMODE/N,MAPCFG
+
+
+@{b}@{i}* Description:@{ui}@{ub}
+   FILES        : Deuxième argument utilisé par LOAD, SAVE, DIR et FORMATxxx.
+
+   DSK          : L'argument DSK sert à spécifier une source, quel que soit son
+                  format. Exemple:
+                  - ToDisk DSK u0: opération sur l'unité 0, face 0
+                  - ToDisk DSK u0s1: opération sur l'unité 0, face 1
+                  - ToDisk DSK u1s1: opération sur l'unité 1, face 1
+                  - ToDisk DSK fichier_image.fd
+                    Cette syntaxe permet de travailler sur la face 0 de l'unité
+                    0 du fichier image.
+                    (Equivaux à ToDisk DSK fichier_image.fd,u0s0)
+                  - ToDisk DSK fichier_image.sap
+                    Cette syntaxe permet de travailler sur le fichier image.
+                  - ToDisk DSK fichier_image.tds
+                    Cette syntaxe permet de travailler sur le fichier image.
+
+                  @{b}Note:@{ub} Il est possible, dans le cas du format FD, de spécifier
+                  une unité et/ou une face de disque thomson. Dans ce  cas,  il
+                  faut ajouter un préfix Ux[Sy] séparé par une  virgule,  après
+                  le nom du fichier image. Exemple:
+                  - ToDisk DSK fichier_image.fd,u0s1
+                    Cette syntaxe permet de travailler sur la face 1 de l'unité
+                    0 du fichier image.
+                  - ToDisk DSK fichier_image.fd,u1
+                    Cette syntaxe permet de travailler sur la face 0 de l'unité
+                    1 du fichier image.
+
+                  Le format FD peut supporter 2  unités  de  2  faces  chacune.
+                  Les options U et S ne peuvent donc prendre que les valeurs  0
+                  et 1.
+
+   @{"K7" link "Doc_Usage_K7" 0}           : Alias de DSK pour spécifier explicitement  le  fichier  image
+                  d'une cassette TO ou MO.
+                  A partir de la version 2.6,  il  est  désormais  possible  de
+                  visualiser, extraire ou convertir des fichiers contenus  dans
+                  une image au format K7.
+                  Exemples:
+                  - ToDisk K7 algebre_mo5.k7 DIR
+                    Affiche la liste des fichiers contenus dans l'image K7.
+                  - ToDisk K7 algebre_mo5.k7 TOSAP ram:algebre_to.sap
+                    Converti l'image K7 en image disquette.
+                  - ToDisk K7 algebre_mo5.k7 LOAD #? ram:
+                    Extrais tous les fichiers de l'image K7 en les plaçant  sur
+                    le ram disk.
+
+                  @{b}Note@{ub}: ToDisk  ne  peut  lire  QUE  les  fichiers  au   format
+                  standard.
+                  La  plupart  des  cassettes  commerciales   contiennent   des
+                  sections de données dans un format  personnalisé.  ToDisk  ne
+                  pourra pas extraire ces données.
+
+                  @{b}Attention:@{ub} Il  n'est  pas  possible  d'utiliser  les  options
+                  en écriture tels que SAVE,  DELETE,  SORTDIR,  etc.  sur  une
+                  source K7.
+
+
+   @{"DIR" link "Doc_Usage_Dir" 0}          : Affiche le contenu du répertoire de la source spécifiée.
+                  Cette option peut prendre un pattern comme paramètre.
+                  Exemples:
+                  - ToDisk DIR
+                    La source étant DSK u0s0 par  défaut,  ToDisk  va  lire  le
+                    contenu du répertoire de la face 0  du  disque  situé  dans
+                    l'unité 0.
+                  - ToDisk DSK fichier_image.fd,u1 DIR
+                    Affichage du répertoire  de  la  face 0  de  l'unité  1  du
+                    fichier image.
+                  - ToDisk DSK fichier_image.fd DIR #?.bas
+                    Affiche la liste des fichiers ayant pour extension BAS.
+
+                  @{b}Attention:@{ub} Le traitement du nom de fichier est insensitif.
+
+   @{"LOAD" link "Doc_Usage_Load" 0}         : Copie d'un ou plusieurs fichiers de la source, sur l'Amiga.
+                  Exemples:
+                  - ToDisk LOAD #?.BAS ram:test
+                    Copie  de  tous  les  fichiers  d'extension  .BAS  vers  le
+                    répertoire ram:test. Si ce dernier n'existe  pas,  il  sera
+                    automatiquement créé.
+                  - ToDisk DSK fichier_image.fd LOAD #?.BAS ram:test
+                    Idem que l'exemple précédent, mais à  partir  d'un  fichier
+                    image au format FD.
+                  - ToDisk DSK fichier_image.sap LOAD auto.bat ram:auto.bas
+                    Copie du fichier 'auto.bat' et  renommage  de  celui-ci  en
+                    'auto.bas' sur la destination.
+
+                  @{b}Attention:@{ub} Le traitement du nom  de  fichier  est  insensitif
+                  mais ToDisk recherche d'abord le nom dans  la  case  demandée
+                  avant de rechercher le fichier en mode insensitif.
+
+   SAVE         : Copie d'un ou plusieurs fichiers de l'Amiga,  sur  la  source
+                  spécifiée. Exemples:
+                  - ToDisk SAVE ram:#?.txt
+                    Recopie tous les fichiers d'extension .txt du répertoire de
+                    l'Amiga, sur la  source  (DSK  u0s0  par  défaut  dans  cet
+                    exemple).
+                  - ToDisk DSK fichier_image.tds SAVE ram:#?.txt
+                    Idem que l'exemple précédent, mais sur un fichier image  au
+                    format TDS.
+
+                  @{b}Attention:@{ub} Le traitement du nom de fichier est insensitif.
+
+   DELETE       : Efface un ou plusieurs fichiers de la source. Exemples:
+                  - ToDisk DELETE #?.bas
+                    Efface tous les fichiers ayant pour extension .bas
+                  - ToDisk DELETE auto.bat
+                    Efface le fichier auto.bat de la source
+                  - ToDisk DSK fichier_image.tds DELETE auto.bat
+                    Idem que l'exemple précédent, mais sur un fichier image  au
+                    format TDS.
+
+                  @{b}Attention:@{ub} Le traitement du nom de fichier est insensitif.
+
+   SORTDIR      : Cette option permet de trier alphabétiquement  le  répertoire
+                  d'une disquette, dans un sens ou dans l'autre. Exemples:
+                  - ToDisk SORTDIR
+                    Lance le tri du répertoire de la face 0 de  l'unité  0.  Le
+                    sens du tri est à spécifier après.
+                  - ToDisk DSK fichier_image.sap SORTDIR
+                    Idem que l'exemple précédent sauf que le tri  se  fait  sur
+                    le répertoire d'un fichier image au format SAP.
+
+   @{"CMPDSKRAW" link "Doc_Usage_CmpDskRaw" 0}    : Permet de comparer un disque spécifié par l'option  DSK  avec
+                  un autre disque. Exemple:
+                  - ToDisk DSK u0s0 CMPDSKRAW ram:test.fd
+                    Compare chaque  secteur  de  chaque  piste  de  chacun  des
+                    disques.
+                  ToDisk indique les numéros de piste et de  secteur  qui  sont
+                  différents.
+
+                  @{b}Attention:@{ub} Il s'agit d'une comparaison brute.
+                  Pour faire une comparaison  par  fichier,  il  faut  utiliser
+                  l'option CMPDSKDOS.
+
+   @{"CMPDSKDOS" link "Doc_Usage_CmpDskDos" 0}    : Permet de comparer un disque spécifié par l'option  DSK  avec
+                  un autre disque.
+                  Contrairement à CMPDSKRAW, cette option fait une  comparaison
+                  fichier par fichier, sans tenir compte des  emplacements  des
+                  fichiers sur les disques. Exemple:
+                  - ToDisk DSK u0s0 CMPDSKDOS ram:test.fd
+                    Compare chaque fichier de la source DSK avec  les  fichiers
+                    du disque spécifié par CMPDSKDOS.
+
+                  @{b}Note:@{ub} Cette  option  ne  teste  pas   les   différences   des
+                  commentaires ou des dates de chacun des  fichiers  de  chaque
+                  disquette, ni le nom des disques.
+                  Seuls les fichiers de  la  disquette  définie  par  DSK  sont
+                  testés avec ceux de la disquette définie par  CMPDSKDOS.  Les
+                  fichiers  qui  sont  uniquement  présents  dans  cette   2ème
+                  disquettes ne sont pas listés  comme  non  présents  dans  la
+                  1ère.
+
+   @{"FINDDSK" link "Doc_Usage_FindDsk" 0}      : Recherche un fichier image équivalent à la  source  spécifiée
+                  avec l'option DSK. Exemple:
+                  - ToDisk DSK image.fd FINDDSK ram:disk/#?.sap
+                    Recherche une  image  équivalente  à  "image.fd",  dans  le
+                    répertoire  "ram:disk/".  Le  pattern  "#?.sap"  permet  de
+                    réduire la recherche aux fichiers avec suffix ".sap".
+                    Si pas de pattern spécifié, la recherche  est  réduite  aux
+                    fichiers portant les suffix .fd, .sap et .tds.
+
+                  @{b}Note:@{ub} Cette fonction fait une comparaison brute des  disques.
+                  Elle affiche un résultat à partir de 80% de ressemblance.
+                  La recherche est par défaut récursive.  Elle  prend  donc  en
+                  compte les sous répertoires. Utiliser NORFD  pour  désactiver
+                  la recherche récursive.
+
+   NORFD        : (Comprendre "No Recursive Find Disk") Permet de désactiver la
+                  recherche récursive de FINDDSK.
+
+   FORMATFLP    : Formatage d'une disquette thomson. Cette commande accepte  la
+                  syntaxe Ux[Sy][In], où U spécifie l'unité, S, la face  et  I,
+                  l'entrelacement (7 si  non  précisé).  Vous  pouvez  préciser
+                  le nom de la disquette en 2ème argument (8 caractères maxi).
+                  Exemple:
+                  - ToDisk FORMATFLP u0 Test
+                    Formate la face 0 de la disquette de l'unité 0 et  applique
+                    le nom 'Test' à la disquette.
+                  - ToDisk FORMATFLP u1s1
+                    Formate la face 1  de  la  disquette  de  l'unité  1,  sans
+                    appliquer de nom.
+
+   FORMATTDS    : Formatage d'un fichier image au format TDS.
+                  Exemple:
+                  - ToDisk FORMATTDS fichier_image.tds Test
+                    Crée un fichier image TDS et applique le nom Test  à  cette
+                    disquette virtuelle.
+
+   FORMATSAP    : Formatage d'un fichier image au format SAP.
+                  Exemple:
+                  - ToDisk FORMATSAP fichier_image.sap Test
+                    Crée un fichier image SAP et applique le nom Test  à  cette
+                    disquette virtuelle.
+
+   FORMATFD     : Formatage d'un fichier image au format FD.
+                  Exemples:
+                  - ToDisk FORMATFD fichier_image.fd Test
+                    Formate la face 0 de l'unité 0 du fichier image. Le fichier
+                    est créé si celui-ci n'existe pas.
+                  - ToDisk FORMATFD fichier_image.fd,s1 Test
+                    Formate la face 1 de l'unité 0 du fichier image.
+
+   TOFLP        : Backup d'une source vers une disquette.
+                  Exemple:
+                  - ToDisk TOFLP u0
+                    Backup la face 0 de l'unité 0 vers la face 0 de l'unité 0.
+                    ToDisk vous demandera de changer de disque à la fin  de  la
+                    lecture du premier.
+                  - ToDisk DSK ram:test.sap TOFLP u0
+                    Initialise  la  face  0  de  la  disquette  présente   dans
+                    l'unité 0 avec le contenu du fichier sap passé en source.
+
+                  @{b}Note:@{ub} Cette option force par défaut le  formatage  de  chaque
+                  piste (depuis la version 2.5). L'entrelacement est de  7  par
+                  défaut. Pour fixer un autre entrelacement, il  faut  utiliser
+                  le paramètre 'i'. Exemple:
+                  - ToDisk TOFLP u0i2
+                    Force l'entrelacement du formatage à 2.
+                    Le  paramètre  'i0'  équivaux  implicitement   à   utiliser
+                    l'option NOFMT.
+
+   TOTDS        : Backup d'une source vers un fichier image TDS.
+                  Exemples:
+                  - ToDisk TOTDS fichier_image.tds
+                    Permet de  créer  un  fichier  image  TDS  à  partir  d'une
+                    disquette Thomson.
+                  - ToDisk DSK fichier_image.sap TOTDS fichier_image.tds
+                    Permet de convertir un fichier image SAP en  fichier  image
+                    TDS.
+
+   TOSAP        : Backup d'une source vers un fichier image SAP.
+                  Exemples:
+                  - ToDisk TOSAP fichier_image.sap
+                    Permet de  créer  un  fichier  image  SAP  à  partir  d'une
+                    disquette Thomson.
+                  - ToDisk DSK fichier_image.tds TOSAP fichier_image.sap
+                    Permet de convertir un fichier image TDS en  fichier  image
+                    SAP.
+
+   TOFD         : Backup d'une source vers un fichier image FD.
+                  Exemples:
+                  - ToDisk DSK fichier_image.sap TOFD fichier_image.fd
+                    Permet de convertir le fichier image SAP en  fichier  image
+                    FD.
+                  - ToDisk DSK fichier_image.sap TOFD fichier_image.fd,s1
+                    Recopie le contenu du fichier image SAP sur la  face  1  de
+                    l'unité 0 du fichier image FD.
+
+   NOFMT        : L'utilisation  de  cette  option  permet  de  désactiver   le
+                  formatage automatique des pistes  lors  de  l'utilisation  de
+                  l'option TOFLP.
+                  A noter que cette option est inutile si  l'option  TOFLP  est
+                  utilisée avec le paramètre "i0" qui équivaut à forcer NOFMT.
+
+   @{"DUMPSECTOR" link "Doc_Usage_DumpSector" 0}  : Dump binaire d'un secteur d'une source disque.
+                  Syntaxe:
+                  ToDisk DSK fichier_image.fd DUMPSECTOR <piste>[,<secteur>[,<nb de secteurs>]]
+                  Exemple:
+                  - ToDisk DSK fichier_image.sap DUMPSECTOR 20,2
+                    Affiche le contenu du secteur 2 de la piste 20.
+                  - ToDisk DSK fichier_image.sap DUMPSECTOR 20
+                    Affiche le contenu de tous les secteurs de la piste 20
+                  - ToDisk DSK fichier_image.sao DUMPSECTOR 14,8,8
+                    Affiche le contenu des 8 derniers secteurs de la piste 14
+
+   VIEW         : Permet de visualiser le contenu d'un fichier en tenant compte
+                  de son type.
+                  Cette option équivaux à utiliser l'option  VIEWAND  pour  les
+                  fichiers Androides, ou VIEWMAP  pour  les  fichiers  MAP,  ou
+                  encore l'option DUMP pour les fichiers binaires.
+                  Elle permet aussi de lire le contenu d'un fichier  texte,  ou
+                  basic (protégé ou non), ou encore assdesass et assembleur.
+                  Exemple:
+                  - ToDisk DSK fichier_image.fd VIEW #?
+                    Affiche le contenu de tous les fichiers sur la disquette.
+                  - ToDisk DSK fichier_image.fd VIEW #?.bas
+                    Permet d'obtenir le listing de tous les fichiers  basic  de
+                    la disquette image.
+
+                  @{b}Remarque:@{ub} Cette option ne permet pas de lire les fichiers  au
+                  format Paragraphe. Ceux-ci s'afficheront via un DUMP.
+
+   VIEWMAP      : Permet d'avoir un aperçu visuel d'une image MAP.
+                  Exemples:
+                  - ToDisk DSK fichier_image.fd VIEWMAP image.map
+                    Visualise l'image 'image.map' du fichier image
+                  - ToDisk DSK fichier_image.fd VIEWMAP #?.map
+                    Visualise toutes les images avec suffixe .map
+
+                  @{b}Note:@{ub} il est possible de changer le mode d'affichage en cours
+                  de visualisation en utilisant les touches 0 à 3.
+                  - 0: force le mode standard
+                  - 1: force le mode 80 colonnes
+                  - 2: force le mode bitmap 4 couleurs
+                  - 3: force le mode bitmap 16 couleurs
+
+                  @{b}Remarque:@{ub} ToDisk  reconnait  aussi  l'extension  To-Snap  des
+                  fichiers MAP.
+                  Les  fichiers   PPM   sont   aussi   supportés   mais   cette
+                  fonctionnalité n'a jamais été testée.
+
+   VIEWAND      : Permet  d'avoir  un  aperçu  visuel  des  tableaux   du   jeu
+                  Androïdes. Exemple:
+                  - ToDisk DSK androids.fd VIEWAND TABLEAU.BIN
+
+                  @{b}Note@{ub}: ToDisk peut  aussi  lire  les  tableaux  du  jeu  Super
+                  Androïdes (suffixe .AND).
+                  L'appuie sur les touches numériques  0  à  9  vous  permettra
+                  d'avoir un aperçu de chacun des 10 tableaux du fichier.
+
+   @{"DUMP" link "Doc_Usage_Dump" 0}        : Dump binaire d'un fichier provenant d'une source thomson.
+                  Exemple:
+                  - ToDisk DSK fichier_image.sap DUMP AUTO.BAT
+
+   UNPROT       : Cette option permet de déprotéger un  fichier  basic  pendant
+                  la copie. Elle s'utilise donc  avec  les  commandes  LOAD  ou
+                  SAVE. Exemple:
+                  - ToDisk DSK fichier_image.sap LOAD #?.BAS UNPROT
+                    Copie tous les fichiers BAS du fichier image  et  déprotège
+                    les fichiers éventuellement protégés.
+
+   CONVASC      : Cette option permet de convertir  un  fichier  texte  thomson
+                  dans le jeu de caractère de l'Amiga.
+                  Exemple:
+                  - ToDisk DSK fichier_image.sap LOAD #?.txt CONVASC
+
+   CONVBAS      : Cette option permet de convertir un fichier basic en Ascii.
+                  Exemple:
+                  - ToDisk DSK fichier_image.sap LOAD #?.bas CONVBAS
+
+                  @{b}Note:@{ub} cette option déprotège le fichier thomson  si  celui-ci
+                  est protégé contre la lecture.
+
+   CONVASS      : Cette option permet de convertir  un  fichier  Assdessass  en
+                  Ascii.
+                  Exemple:
+                  - ToDisk DSK fichier_image.sap LOAD #?.ASS CONVASS
+
+   CONVASM      : Cette option permet de convertir un fichier Assembleur x.0 en
+                  Ascii.
+                  Exemple:
+                  - ToDisk DSK fichier_image.sap LOAD #?.ASM CONVASM
+
+   CONVMAP      : Cette option permet de convertir un fichier  MAP  en  fichier
+                  IFF (non compressé).
+                  Exemple:
+                  - ToDisk DSK fichier_image.sap LOAD #?.MAP CONVMAP
+
+   CONVALL      : Cette  option  revient  à  activer  toutes  les  options   de
+                  conversion: UNPROT, CONVASC,  CONVBAS,  CONVASS,  CONVASM  et
+                  CONVMAP.
+
+   IMPORTTXT    : Cette option vous permet de convertir un fichier  texte  dans
+                  un format supporté par ToDisk.
+                  ToDisk sait gérer 2 formats d'imports pour le moment:
+                  - "ASS": il  vous  permet  de  convertir  un  fichier  source
+                    assembleur (6809) provenant  de  votre  Amiga,  en  fichier
+                    directement assemblable sur Assdesass.  L'idée  est  de  se
+                    passer de son éditeur et d'utiliser un éditeur moderne à la
+                    place.
+                    Depuis todisk 2.6, cette option accèpte des paramètres pour
+                    définir la numérotation automatique des lignes. Syntaxe:
+                    IMPORTXT=ASS,<ligne de départ>,<pas d'incrémentation>
+                    Si pas de paramètres spécifié, todisk numérote avec un  pas
+                    de 10, à partir de la ligne 100.
+                  - "ASCG2": il  vous  permet  de  simplement   convertir   les
+                    caractères accentués et retours chariots  dans  le  jeu  de
+                    caratères du thomson.
+
+                  Il convient d'utiliser cette option avec l'option  SAVE  afin
+                  d'importer le fichier généré sur un support disque thomson.
+
+                  Exemples:
+                  - ToDisk DSK image.sap SAVE source.txt SOURCE.ASS IMPORTTXT=ASS
+                    Converti  et  sauvegarde  le  fichier  source.txt,  en   le
+                    renommant avec le suffix .ASS.
+                  - ToDisk DSK image.sap SAVE source.txt SOURCE.ASS IMPORTTXT=ASS,10,1
+                    Ici, on fait la même conversion que précédemment, sauf  que
+                    l'on change les paramètres  de  renumérotation  automatique
+                    des lignes Assdesass. Dans cet exemple,  todisk  renumérote
+                    avec un pas de 1, en commençant à la ligne 10.
+                  - ToDisk DSK image.sap SAVE texte.txt essai.txt IMPORTTXT=ASCG2
+                    Converti le fichier essai.txt au format ANSI, dans  le  jeu
+                    de caractères du thomson (les  accents  et  retour  chariot
+                    sont convertis).
+
+                  @{b}Note@{ub}: Contrairement aux  fichiers  assdesass,  il  n'est  pas
+                  nécessaire de numéroter les lignes du code source.  Elles  ne
+                  sont de toute manière pas prises en compte dans la conversion
+                  et ToDisk auto génère les numéros de ligne à la conversion.
+
+   MAPMODE      : Cette  option  est  un  complément  des  options  VIEWMAP  et
+                  CONVMAP. Elle permet de forcer le  mode  d'écran  à  utiliser
+                  lors du décodage de l'image.
+                  Exemples:
+                  - ToDisk LOAD #?.MAP CONVMAP MAPMODE 0
+                    Force le mode standard 16 couleurs
+                  - ToDisk LOAD #?.MAP CONVMAP MAPMODE 1
+                    Force le mode haute résolution 2 couleurs
+                  - ToDisk LOAD #?.MAP CONVMAP MAPMODE 2
+                    Force le mode bitmap 4 couleurs
+                  - ToDisk LOAD #?.MAP CONVMAP MAPMODE 3
+                    Force le mode bitmap 16 couleurs
+                  - ToDisk VIEWMAP #?.MAP MAPMODE 3
+                    Force l'affichage en mode bitmap 16 couleurs
+
+   MAPCFG       : Complément  des  options  VIEWMAP  et  CONVMAP.  Elle  permet
+                  d'appliquer un fichier de palette au  format  CFG  (Thomson).
+                  Cette option prend comme argument un nom de fichier provenant
+                  de la source, ou  de  l'Amiga  si  ce  nom  est  préfixé  par
+                  un '\\'.
+                  Exemples:
+                  - ToDisk LOAD #?.MAP CONVMAP MAPCFG PALETTE.CFG
+                    Applique le fichier PALETTE.CFG de la source
+                  - ToDisk LOAD #?.MAP CONVMAP MAPCFG \\ram:palette.chg
+                    Applique le fichier palette.chg sur l'espace disque Amiga
+
+@endnode
+
+
+@node "Doc_UsageQuick" "Utilisation rapide de la commande"
+Voici quelques exemples pour utiliser ToDisk:
+
+@{b}* Convertir un fichier K7 en image disque@{ub}
+
+  todisk K7 ram:scarfinger.k7 TOFD ram:scarfinger.fd
+
+
+@{b}* Créer une vraie disquette thomson à partir d'une image de disquette@{ub}
+
+  @{i}Mettre une disquette vierge dans le lecteur de disquette interne de l'amiga@{ui}
+  todisk DSK ram:toto.sap TODSK u0
+
+
+@{b}* Créer une image sap vierge de disquette@{ub}
+
+  todisk FORMATSAP ram:toto.sap NOM
+
+
+@{b}* Extraire les fichiers d'une vraie disquette thomson@{ub}
+
+  @{i}Mettre une disquette dans le lecteur de disquette interne de l'amiga@{ui}
+  todisk LOAD #? ram:destination
+
+
+@{b}* Extraire les fichiers d'un disque image@{ub}
+
+  todisk DSK ram:toto.sap LOAD #? ram:destination
+
+
+@{b}* Afficher le catalogue d'une vraie disquette thomson@{ub}
+
+  @{i}Mettre une disquette vierge dans le lecteur de disquette interne de l'amiga@{ui}
+  todisk DIR
+
+
+@{b}* Afficher le catalogue d'un disque image@{ub}
+
+  todisk DSK ram:toto.sap DIR
+
+
+@{b}* Afficher toutes les images map contenues dans un disque image@{ub}
+
+  todisk DSK ram:toto.sap VIEWMAP #?.map
+
+
+@{b}* Lister un fichier basic provenant d'un disque image@{ub}
+
+  todisk DSK ram:toto.sap VIEW #?.bas
+
+
+@{b}* Créer une image disque FD double face, à partir de 2 images disque SAP@{ub}
+
+  @{i}Il faut procéder en 2 fois sur le même fichier destination@{ui}
+  todisk DSK ram:toto_face0.sap TOFD ram:toto.fd
+  todisk DSK ram:toto_face1.sap TOFD ram:toto.fd,s1
+
+
+@endnode
+
+
+@node "Doc_Usage_K7" "Exemple d'utilisation d'une image K7"
+@{b}@{u}Exemples d'utilisations d'une image K7@{uu}@{ub}
+
+
+@{b}* Afficher le catalogue d'une cassette@{ub}
+
+Ram:> ToDisk K7 algebre_mo5.k7 DIR
+Volume name: '<no name>' - Free space: 0 KB
+============================================================
+Name          Type  Size  Blk  Date       Time      Comment
+============================================================
+ENTETMO5 BAS  B B    698    2  .......... ........
+ALGEBMO5 BAS  B B  21812   22  .......... ........
+CAAV MO5 BAS  B B    458    2  .......... ........
+------------------------------------------------------------
+  3 file(s)        22968   26
+
+
+@{b}* Extraction et conversion des fichiers de la cassette@{ub}
+
+Ram:> ToDisk K7 algebre_mo5.k7 LOAD #? ram: CONVALL
+ENTETMO5.BAS     -> copied : ram:ENTETMO5.BAS
+ALGEBMO5.BAS     -> copied : ram:ALGEBMO5.BAS
+CAAV MO5.BAS     -> copied : ram:CAAV MO5.BAS
+
+
+@{b}* Conversion d'un fichier K7 en image disque FD@{ub}
+
+Ram:> ToDisk K7 //disk/algebre_mo5.k7 TOFD ram:algebre.fd
+Starting K7 conversion...
+Step 1: Format destination
+Starting format:
+Format track 79/79...
+Step 2: Copy files
+ENTETMO5.BAS     -> copied : ENTETMO5.BAS
+ALGEBMO5.BAS     -> copied : ALGEBMO5.BAS
+CAAV MO5.BAS     -> copied : CAAV MO5.BAS
+Conversion completed
+
+@endnode
+
+
+@node "Doc_Usage_Load" "Commande LOAD"
+@{b}@{u}Commande LOAD@{uu}@{ub}
+
+Ram:> ToDisk DSK dh3:thomson/disk/fd/jeu/jeu_mgt_aigle_saph.fd LOAD #? ram:jeu
+jeu [created]
+AIG.BAS          -> copied : ram:jeu/AIG.BAS
+AUTO.BAT         -> copied : ram:jeu/AUTO.BAT
+AIG.BIN          -> copied : ram:jeu/AIG.BIN
+AIGLE.BAS        -> copied : ram:jeu/AIGLE.BAS
+PRAIG7.DCL       -> copied : ram:jeu/PRAIG7.DCL
+AIGSP8.BIN       -> copied : ram:jeu/AIGSP8.BIN
+TRANS.BAS        -> copied : ram:jeu/TRANS.BAS
+DUMP.BIN         -> copied : ram:jeu/DUMP.BIN
+DEP.BAS          -> copied : ram:jeu/DEP.BAS
+ENRE5.ASS        -> copied : ram:jeu/ENRE5.ASS
+
+@endnode
+
+
+@node "Doc_Usage_CmpDskRaw" "Commande CMPDSKRAW"
+@{b}@{u}Commande CMPDSKRAW@{uu}@{ub}
+
+Ram:> ToDisk DSK dh3:thomson/disk/fd/jeu/jeu_mgt_aigle_saph.fd CMPDSKRAW ram:mgt_sap_5axe.sap
+Start comparaison...
+Compare track 20, sector  2: difference at offset 51 (81)
+Compare track 20, sector  3: difference at offset 00 (0)
+Compare track 20, sector  4: difference at offset 00 (0)
+Compare track 23, sector 13: difference at offset 00 (0)
+Compare track 57, sector  1: difference at offset 00 (0)
+Compare track 57, sector  2: difference at offset 00 (0)
+Compare track 57, sector  3: difference at offset 00 (0)
+Compare track 57, sector  4: difference at offset 00 (0)
+Compare track 57, sector  5: difference at offset 00 (0)
+Compare track 57, sector  6: difference at offset 00 (0)
+Compare track 57, sector  7: difference at offset 00 (0)
+Compare track 57, sector  8: difference at offset 00 (0)
+Compare track 67, sector  9: difference at offset 00 (0)
+Compare track 68, sector  1: difference at offset 00 (0)
+Compare track 68, sector  2: difference at offset 00 (0)
+Compare track 68, sector  9: difference at offset 00 (0)
+Compare track 68, sector 10: difference at offset 00 (0)
+Compare track 68, sector 11: difference at offset 00 (0)
+Compare track 69, sector  1: difference at offset 00 (0)
+Compare track 69, sector  9: difference at offset 00 (0)
+Compare track 69, sector 10: difference at offset 00 (0)
+Compare track 69, sector 11: difference at offset 00 (0)
+Compare track 69, sector 12: difference at offset 00 (0)
+Compare track 79, sector  1: difference at offset 00 (0)
+Compare track 79, sector  2: difference at offset 00 (0)
+Compare track 79, sector  3: difference at offset 00 (0)
+Compare track 79, sector  4: difference at offset 00 (0)
+Compare track 79, sector  5: difference at offset 00 (0)
+Compare track 79, sector  6: difference at offset 00 (0)
+Compare track 79, sector  7: difference at offset 00 (0)
+Compare track 79, sector  8: difference at offset 00 (0)
+Compare track 79, sector  9: difference at offset 00 (0)
+Compare track 79, sector 10: difference at offset 00 (0)
+Compare track 79, sector 11: difference at offset 00 (0)
+Compare track 79, sector 12: difference at offset 00 (0)
+Compare track 79, sector 13: difference at offset 00 (0)
+Compare track 79, sector 14: difference at offset 00 (0)
+Compare track 79, sector 15: difference at offset 00 (0)
+Compare track 79, sector 16: difference at offset 00 (0)
+
+39 difference(s) found
+
+@endnode
+
+
+@node "Doc_Usage_CmpDskDos" "Commande CMPDSKDOS"
+@{b}@{u}Commande CMPDSKDOS@{uu}@{ub}
+
+Ram:> ToDisk DSK dh3:thomson/disk/fd/jeu/jeu_mgt_aigle_saph.fd CMPDSKDOS ram:mgt_sap_5axe.sap
+DSK base            - DSK to compare
+===========================================
+AIG.BAS      (0000) - ............ (....) : Not found
+AUTO.BAT     (0000) - ............ (....) : Not found
+AIG.BIN      (0200) - ............ (....) : Not found
+AIGLE.BAS    (0000) - ............ (....) : Not found
+PRAIG7.DCL   (0200) - PRAIG7.DCL   (0200) : Same
+AIGSP8.BIN   (0200) - AIGSP8.BIN   (0200) : Same
+TRANS.BAS    (0000) - ............ (....) : Not found
+DUMP.BIN     (0200) - ............ (....) : Not found
+DEP.BAS      (0000) - ............ (....) : Not found
+ENRE5.ASS    (0300) - ............ (....) : Not found
+===========================================
+Same: 2/10 - Not found: 8 - IO Error : 0
+
+@endnode
+
+
+@node "Doc_Usage_FindDsk" "Commande FINDDSK"
+@{b}@{u}Commande FINDDSK@{uu}@{ub}
+
+Ram:> ToDisk DSK ram:mgt_sap_5axe.sap FINDDSK dh3:thomson/disk/fd/
+Find disk like source disk
+Load source disk to memory...
+Reading track 79, sector 16
+Scan image file using pattern "#?.(sap|fd|tds)"
+=============================
+* Match  97% * : dh3:thomson/disk/fd/jeu/jeu_mgt_aigle_saph.fd
+=============================
+Total files analyzed: 119 - Total perfect match: 0
+
+@endnode
+
+
+@node "Doc_Usage_Dir" "Commande DIR"
+@{b}@{u}Commande DIR@{uu}@{ub}
+
+Exemple d'utilisation de la commande DIR
+
+Ram:> ToDisk DSK dev_andr.fd DIR
+Volume name: '<no name>' - Free space: 16 KB
+============================================================
+Name          Type  Size  Blk  Date       Time      Comment
+============================================================
+CUSTOM2  BIN  M B  10920   12  .......... ........
+CUSTOM3  BIN  M B  10920   12  .......... ........
+CUSTOM4  BIN  M B  10920   12  .......... ........
+CUSTOM5  BIN  M B  10920   12  .......... ........
+CUSTOM6  BIN  M B  10920   12  .......... ........
+CUSTOM7  BIN  M B  10920   12  .......... ........
+AND      BAS  B B     32    2  .......... ........
+LANDR1   BIN  M B    559    2  .......... ........
+ANDRDF   BIN  M B   6436    8  .......... ........
+ED       BAS  B B     34    2  .......... ........
+TABMODIF BIN  M B  10920   12  .......... ........
+EDAND    BIN  M B   6875    8  .......... ........
+CUSTOM8  BIN  M B  10920   12  .......... ........
+TABLEAU  BIN  M B  10920   12  .......... ........
+PROTO    ASS  A B  10779   12  .......... ........
+CUSTOM1  BIN  M B  10920   12  .......... ........
+CUSTOM9  BIN  M B  10920   12  .......... ........
+YOPYOP   BIN  M B  10920   12  .......... ........
+RECONS   BAS  B B    393    2  .......... ........
+TINTLUN2 MAP  M B   6342    8  .......... ........
+LDANDR   BIN  M B   1310    2  .......... ........
+PROTO    BAS  B B   3148    4  .......... ........
+COPPERLI ASS  A B   2245    4  .......... ........
+MTAND    BAS  B B    949    2  .......... ........
+LOADED   ASS  A B  15293   16  .......... ........
+GADGET   BAS  B B   2315    4  .......... ........
+IMPEXP   BIN  M B     72    2  .......... ........
+PROTO    BIN  M B   1948    2  .......... ........
+LDANDR   ASS  A B   8095    8  .......... ........
+DECMAP   ASS  A B    801    2  .......... ........
+LOADED   BIN  M B   2774    4  .......... ........
+DECMAP   BIN  M B    127    2  .......... ........
+AFF      BIN  M B    496    2  .......... ........
+MSXPC3TO BAS  B B  13387   14  .......... ........
+LOADED02 ASS  A B  15878   16  .......... ........
+EDAND2   BIN  M B   6875    8  .......... ........
+LOADED01 ASS  A B  15839   16  .......... ........
+LOADED01 BIN  M B   2875    4  .......... ........
+------------------------------------------------------------
+ 38 file(s)       256917  300
+
+@endnode
+
+
+@node "Doc_Usage_Dump" "Commande DUMP"
+@{b}@{u}Commande DUMP@{uu}@{ub}
+
+Exemple d'utilisation de la commande DUMP
+
+Ram:>ToDisk DSK dev_andr.fd DUMP DECMAP.BIN
+000000  00 00 75 D0 00 CE A0 00 33 41 86 08 E6 41 5C 3D  ..u.....3A...A\=
+000010  1F 02 A6 C1 4C F6 E7 C3 CA 01 F7 E7 C3 8E 40 00  ....L.........@.
+000020  34 22 8D 0B 35 22 7A E7 C3 8E 40 00 8D 01 39 34  4"..5"z...@...94
+000030  32 A6 C0 27 10 E6 C0 E7 84 30 88 28 31 3F 27 17  2..'.....0.(1?'.
+000040  4A 26 F4 20 EC A6 C0 E6 C0 E7 84 30 88 28 31 3F  J&.........0.(1?
+000050  27 14 4A 26 F2 20 DA 6A E4 27 1A AE 61 30 01 AF  '.J&...j.'..a0..
+000060  61 10 AE 63 20 DA 6A E4 27 0B AE 61 30 01 AF 61  a..c..j.'..a0..a
+000070  10 AE 63 20 DD 33 42 32 65 39 02 02 00 D0 00     ..c..3B2e9.....
+@endnode
+
+
+@node "Doc_Usage_DumpSector" "Commande DUMPSECTOR"
+@{b}@{u}Commande DUMPSECTOR@{uu}@{ub}
+
+Exemple d'utilisation de la commande DUMPSECTOR
+
+Ram:>ToDisk DSK disque_jeu.fd DUMPSECTOR 22,4
+First Track: 22, First Sector: 04, Count of sectors: 1
+000000  96 F9 91 F5 27 08 22 23 0F E6 0F F0 20 D7 81 09  ....'."#........
+000010  26 19 10 9E ED BD E0 1F D6 F6 5C A6 A5 97 F6 C6  &.........\.....
+000020  09 D7 F9 81 C0 25 04 84 0F 97 F9 9E E9 9F F3 CC  .....%..........
+000030  44 80 B1 E0 02 26 02 CB 7F 96 F5 91 F9 25 02 DC  D....&.......%..
+000040  F7 4F 30 8B 9F F1 96 FA 0C FA 0C F5 97 4C DC FB  .O0..........L..
+000050  DD 4A BD E0 04 86 03 10 25 FF 83 9E F3 E6 80 9F  .J......%.......
+000060  00 00 80 D1 52 F3 E7 61 7E D0 D7 86 01 D6 F0 C5  ....R..a~.......
+000070  02 10 27 FF 6E BD D1 93 10 25 FF 67 10 9E ED 96  ..'.n....%.g....
+000080  F6 D6 F5 C8 C0 4C E7 A6 BD E0 10 10 25 FF 54 DC  .....L......%.T.
+000090  F3 93 E9 ED 2E BD E0 16 10 25 FF 47 BD E0 22 10  .........%.G..".
+0000A0  25 FF 40 7E D0 D7 96 FA 97 4C DC FB DD 4A 7E E0  %.@~.....L...J~.
+0000B0  16 0D F0 26 4C 8D 10 10 25 FF 28 5D 27 25 BD E0  ...&L...%.(]'%..
+0000C0  13 10 25 FF 1E 20 1C D7 F0 BD E0 0D 25 03 BD E0  ..%.........%...
+0000D0  10 39 0D F0 26 2B 8D EF 10 25 FF 07 86 08 5D 10  .9..&+...%....].
+0000E0  26 FF 00 BD E0 00 00 7F D1 D2 19 10 25 FE F9 9E  &...........%...
+0000F0  E9 9F F3 30 89 00 80 C6 44 F1 E0 02 26 03 30 A6  ...0....D...&.0.
+@endnode
+
+
+@node "Doc_Link" "Trouver des logiciels thomson"
+@{b}@{u}Liens@{uu}@{ub}
+
+* DCMOTO
+  http://dcmoto.free.fr
+
+* Logicielmoto.com
+  http://www.logicielsmoto.com
+
+* Serveur87
+  http://www.serveur87.com
+
+* Collection Thomson
+  http://ct.ghislain.fr/site/edito/page.php
+
+* Nostalgies Thomsonistes
+  http://nostalgies.thomsonistes.org
+
+@endnode
+
+
+@node "Doc_FAQ" "Foire aux questions (FAQ)"
+@{b}@{u}FAQ@{uu}@{ub}
+
+Pas de question pour l'instant.
+@endnode
+
+
+@node "Doc_About" "A propos de..."
+@{b}@{u}Auteurs/Codeurs@{uu}@{ub}
+
+    Sébastien Gréau (Seg)
+        Développeur de la commande ToDisk
+
+    Régis Gréau (SReg)
+        Développeur de todisk.device
+
+
+@{b}@{u}Coordonnées réseau@{uu}@{ub}
+
+    NickName: Seg
+    eMail: twinvnc@free.fr
+    Web: http://twinvnc.free.fr
+
+
+@{b}@{u}Coordonnées postales@{uu}@{ub}
+
+    Sébastien Gréau
+    1 rue Clément Ader
+    76800 St Etienne du Rouvray
+    FRANCE
+
+
+@{b}@{u}Remerciements@{uu}@{ub}
+
+    Gilles Fetis: pour son émulateur Téo
+    Daniel Coulom: pour son émulateur DCMOTO
+    Samuel Devulder: Pour le portage d'UAE et de Téo sur Amiga
+@endnode

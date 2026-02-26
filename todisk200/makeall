@@ -1,0 +1,5 @@
+delete #?.o
+delete #?.lnk
+delete smakefile
+mkmk target todisknew
+delete smakefile.info

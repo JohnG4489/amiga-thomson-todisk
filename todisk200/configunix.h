@@ -1,0 +1,52 @@
+#ifndef CONFIGUNIX_H
+#define CONFIGUNIX_H
+
+enum TODISK_ARGS
+{
+    ARG_FILES=0,
+    ARG_DSK,
+    ARG_DIR,
+    ARG_LOAD,
+    ARG_SAVE,
+    ARG_DELETE,
+    ARG_SORTDIR,
+    ARG_CMPDSKRAW,
+    ARG_CMPDSKDOS,
+    ARG_FINDDSK,
+    ARG_NORFD,
+    ARG_FORMATFLP,
+    ARG_FORMATTDS,
+    ARG_FORMATSAP,
+    ARG_FORMATFD,
+    ARG_TOFLP,
+    ARG_TOTDS,
+    ARG_TOSAP,
+    ARG_TOFD,
+    ARG_NOFMT,
+    ARG_DUMPSECTOR,
+    ARG_VIEW,
+    ARG_VIEWMAP,
+    ARG_VIEWAND,
+    ARG_DUMP,
+    ARG_UNPROT,
+    ARG_CONVASC,
+    ARG_CONVBAS,
+    ARG_CONVASS,
+    ARG_CONVASM,
+    ARG_CONVMAP,
+    ARG_CONVALL,
+    ARG_IMPORTTXT,
+    ARG_MAPMODE,
+    ARG_MAPCFG,
+    COUNTOF_ARGS
+};
+
+/***** VARIABLES ET FONCTIONS    *****/
+/***** PUBLIQUES UTILISABLES PAR *****/
+/***** D'AUTRES BLOCS DU PROJET  *****/
+
+extern LONG Cfg_ParseArg(int, const char *[], LONG *);
+extern void Cfg_FreeArg(LONG *);
+
+
+#endif  /* CONFIGUNIX_H */
