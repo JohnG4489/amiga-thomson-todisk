@@ -1,125 +1,133 @@
-# ToDisk – Utilitaire de manipulation et transfert Thomson pour AmigaOS
+# ToDisk — Thomson Disk & Tape Toolkit for AmigaOS (CLI)
 
-## 🇫🇷 Objectif
+## 🇫🇷 Français : Outil “chirurgical” pour manipuler/convertir/transférer des images disques et cassettes Thomson depuis AmigaOS.
 
-**ToDisk** est une commande CLI complète conçue pour manipuler, convertir et transférer des fichiers ou des images disques issus de l'écosystème **Thomson** (MO5, TO7, TO8, TO9+).
+### Objectif
 
-Alors que le handler offre un accès transparent, **ToDisk** est l'outil de "chirurgie" permettant de gérer les formats d'images (.FD, .SAP, .TDS), de formater des disquettes réelles et d'assurer le pipeline de **Cross-Développement** entre l'Amiga et le Thomson.
+**ToDisk** est une commande CLI dédiée à l’écosystème **Thomson 8-bit** (MO5, TO7, TO8, TO9+).  
+Là où le *handler* apporte un accès transparent, **ToDisk** est l’outil de **maintenance / conversion / transfert physique** : images disques (`.FD/.SAP/.TDS`), cassettes (`.K7`), formatage et pipeline de **cross-dev Amiga ↔ Thomson**.
 
----
+### Points forts
 
-## ✨ Fonctionnalités principales
+- **Multi-formats** : prise en charge complète des images `.FD`, `.SAP`, `.TDS`
+- **Cassette `.K7`** : lecture des cassettes standard comme unité virtuelle (extraction)
+- **Transfert physique** : écriture d’images vers disquettes réelles + dump depuis disquettes
+- **Outils d’assets** : visualiseurs intégrés (MAP, niveaux *Androïdes*)
+- **Cross-développement** :
+  - conversion **IFF Amiga → MAP Thomson**
+  - import **ANSI → Assdesass (.ASS)** avec numérotation auto (éditeur **EPI**)
+- **Formatage** : création de disquettes 3.5" au format Thomson
+- S’appuie sur **`todisk.device`** pour une gestion fiable des secteurs (256 octets, etc.)
 
-* **Gestion multi-formats** : Support complet des images `.FD`, `.SAP` et `.TDS`.
-* **Support Cassette** : Lecture des fichiers `.K7` standard comme des unités disques virtuelles.
-* **Transfert physique** : Backup d'images vers disquettes réelles et inversement via le lecteur Amiga.
-* **Visualisation d'assets** : Visualiseurs intégrés pour les images **MAP** et les niveaux du jeu **Androïdes**.
-* **Cross-Développement** :
-* Conversion d'images **IFF Amiga** vers **MAP Thomson**.
-* Import de texte **ANSI** vers sources **Assdesass (.ASS)** avec numérotation auto (compatible éditeur **EPI**).
+### Formats supportés
 
+| Format | Description | Particularité |
+|---|---|---|
+| **.FD** | Image brute (raw) | binaire direct, multi-unités / multi-faces |
+| **.SAP** | Image “sécurisée” | secteurs avec en-têtes + checksums |
+| **.TDS** | Image packée | n’enregistre que les secteurs utilisés |
+| **.K7** | Image cassette | lecture seule (extraction) |
 
-* **Formatage** : Création de disquettes physiques au format natif Thomson (3.5").
-* S'appuie sur **`todisk.device`** pour une fiabilité optimale des secteurs.
+### Détails techniques (résumé)
 
----
+- Écrit en **C** (68020+ recommandé pour les conversions)
+- **`todisk.device`** : pilote spécifique (secteurs 256 octets, bug de numérotation des faces Thomson, etc.)
+- **MultiDOS** : architecture modulaire (portabilité de la logique FS)
+- Conversion **G2 (accents Thomson) → ANSI Amiga**
+- Respect strict des types Thomson (BIN, BAS, ASS, ASC)
 
-## 🧾 Correspondance des formats d'images
+### Prérequis
 
-ToDisk permet de jongler entre les standards de la communauté Thomson :
+- **CPU** : 68020+
+- **OS** : AmigaOS 2.04 (V37) minimum
+- **Matériel** : lecteur disquette interne/externe requis pour le transfert physique
 
-| Format | Description | Caractéristique |
-| --- | --- | --- |
-| **.FD** | Format brut (Raw) | Image binaire directe, supporte plusieurs unités/faces. |
-| **.SAP** | Format sécurisé | Secteurs avec en-têtes et checksums d'intégrité. |
-| **.TDS** | Format packé | Format optimisé n'enregistrant que les secteurs utilisés. |
-| **.K7** | Image Cassette | Supporté en lecture seule pour l'extraction de fichiers. |
+### Installation (binaire)
 
----
+1. Copier `todisk` dans `C:`
+2. Copier `todisk.device` dans `DEVS:`
+3. *(Optionnel)* Pour l’accès transparent via handler : installer `tofilesystem` dans `L:` et monter via vos DOSDrivers
 
-## 🛠️ Aspects techniques
+### Utilisation
 
-* Développé en **C** (68020+ recommandé pour les routines de conversion).
-* **todisk.device** : Driver spécifique gérant les secteurs de 256 octets et le bug de numérotation des faces Thomson.
-* **MultiDOS** : Architecture modulaire permettant le portage de la logique FS.
-* Gestion du jeu de caractères **G2** (accents Thomson) vers **ANSI** Amiga.
-* Respect strict des types de fichiers Thomson (BIN, BAS, ASS, ASC).
+- Lister les commandes / options :
+  - `todisk ?`
+- Bon réflexe : garder un workflow “image → conversion → transfert physique” selon le besoin.
 
----
+> Astuce : ToDisk est pensé comme une “boîte à outils” : il fait le sale boulot (formats, checks, conversions), le handler fait le confort (montage transparent).
 
-## ⚙️ Configuration requise / Installation
+### Limitations / Notes
 
-### Requis
+- Certaines opérations nécessitent un matériel compatible (lecteur, timings, etc.)
+- Les conversions “assets” dépendent des conventions de formats côté Thomson (MAP, etc.)
 
-* **CPU** : 68020 ou supérieur.
-* **OS** : AmigaOS 2.04 (V37) minimum.
-* **Hardware** : Lecteur de disquettes interne ou externe (pour accès physique).
+### Licence
 
-### Installation
-
-1. Copier l'exécutable `todisk` dans votre répertoire `C:`.
-2. Copier le pilote `todisk.device` dans `DEVS:`.
-3. (Optionnel) Pour utiliser le handler, copier `tofilesystem` dans `L:` et monter les unités via vos DOSDrivers.
-
----
-
-# ToDisk – Thomson Transfer and Manipulation Tool for AmigaOS
-
-## 🇬🇧 Purpose
-
-**ToDisk** is a comprehensive CLI utility designed to manipulate, convert, and transfer files or disk images from the **Thomson** 8-bit ecosystem (MO5, TO7, TO8, TO9+).
-
-While the handler provides transparent access, **ToDisk** is the "surgical" tool used to manage image formats (.FD, .SAP, .TDS), format physical floppies, and handle the **Cross-Development** pipeline between Amiga and Thomson systems.
+Licence MIT
 
 ---
 
-## ✨ Main Features
+## 🇬🇧 English : “Surgical” CLI tool to manipulate/convert/transfer Thomson disk & tape images from AmigaOS.
 
-* **Multi-format support**: Full management of `.FD`, `.SAP`, and `.TDS` images.
-* **Tape Support**: Read standard `.K7` files as virtual disk units.
-* **Physical Transfer**: Backup images to real floppies and vice versa.
-* **Asset Visualization**: Built-in viewers for **MAP** images and **Androïdes** game levels.
-* **Cross-Development**:
-* **IFF Amiga** to **MAP Thomson** image conversion.
-* **ANSI text** to **Assdesass (.ASS)** source import with auto-line numbering (compatible with **EPI** editor).
+### Purpose
 
+**ToDisk** is a CLI tool for the **Thomson 8-bit** ecosystem (MO5, TO7, TO8, TO9+).  
+While the *handler* provides transparent access, **ToDisk** is the **maintenance / conversion / physical transfer** toolkit: disk images (`.FD/.SAP/.TDS`), tape images (`.K7`), formatting, and an **Amiga ↔ Thomson cross-dev** pipeline.
 
-* **Formatting**: Create physical 3.5" floppies in native Thomson format.
-* Relies on **`todisk.device`** for optimal sector reliability.
+### Highlights
 
----
+- **Multi-format** support: full handling of `.FD`, `.SAP`, `.TDS` images
+- **Tape `.K7`** support: read standard tapes as a virtual unit (extraction)
+- **Physical transfer**: write images to real floppies + dump real floppies back to images
+- **Asset tools**: built-in viewers (MAP images, *Androïdes* levels)
+- **Cross-development**:
+  - **Amiga IFF → Thomson MAP** conversion
+  - **ANSI text → Assdesass (.ASS)** import with auto line numbering (EPI editor compatible)
+- **Formatting**: create 3.5" Thomson-native floppies
+- Relies on **`todisk.device`** for reliable sector handling (256-byte sectors, etc.)
 
-## 🧾 Image Format Correspondence
+### Supported formats
 
-| Format | Description | Key Feature |
-| --- | --- | --- |
-| **.FD** | Raw format | Direct binary image, supports multiple units/sides. |
-| **.SAP** | Secured format | Sectors with headers and integrity checksums. |
-| **.TDS** | Packed format | Optimized format only recording used sectors. |
-| **.K7** | Cassette Image | Supported in read-only mode for file extraction. |
+| Format | Description | Key point |
+|---|---|---|
+| **.FD** | Raw disk image | direct binary, multi-drive / multi-side |
+| **.SAP** | “Secured” image | sector headers + integrity checksums |
+| **.TDS** | Packed image | stores only used sectors |
+| **.K7** | Tape image | read-only (extraction) |
 
----
+### Technical overview
 
-## 🛠️ Technical details
-
-* Written in **C** (68020+ recommended for conversion routines).
-* **todisk.device**: Specific driver handling 256-byte sectors and the Thomson side-numbering bug.
-* **MultiDOS**: Modular architecture allowing FS logic to be ported to other systems.
-* **G2 Character Set** management (Thomson accents) to Amiga **ANSI** conversion.
-* Strict adherence to Thomson file types (BIN, BAS, ASS, ASC).
-
----
-
-## ⚙️ Requirements / Installation
+- Written in **C** (68020+ recommended for conversion routines)
+- **`todisk.device`**: dedicated driver (256-byte sectors, Thomson side-numbering quirks, etc.)
+- **MultiDOS**: modular architecture (portable FS logic)
+- **G2 charset (Thomson accents) → Amiga ANSI** handling
+- Strict Thomson file type handling (BIN, BAS, ASS, ASC)
 
 ### Requirements
 
-* **CPU**: 68020 or higher.
-* **OS**: AmigaOS 2.04 (V37) minimum.
-* **Hardware**: Internal or external floppy drive (for physical access).
+- **CPU**: 68020+
+- **OS**: AmigaOS 2.04 (V37) minimum
+- **Hardware**: internal/external floppy drive required for physical operations
 
-### Installation
+### Installation (binary)
 
-1. Copy `todisk` to your `C:` directory.
-2. Copy `todisk.device` to `DEVS:`.
-3. (Optional) For handler usage, copy `tofilesystem` to `L:` and mount units via your DOSDrivers.
+1. Copy `todisk` to `C:`
+2. Copy `todisk.device` to `DEVS:`
+3. *(Optional)* For transparent access via handler: install `tofilesystem` into `L:` and mount using your DOSDrivers
+
+### Usage
+
+- List commands / options:
+  - `todisk ?`
+- Recommended workflow: “image → convert → physical write” depending on your target.
+
+> Tip: Think of ToDisk as the “surgical toolkit” (formats, checks, conversions), and the handler as the comfort layer (transparent mount).
+
+### Limitations / Notes
+
+- Some operations require compatible hardware (drive, timings, etc.)
+- Asset conversions depend on Thomson-side format conventions (MAP, etc.)
+
+### License
+
+Licence MIT
